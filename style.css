@@ -1,0 +1,195 @@
+#presentation-pet-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+#presentation-pet {
+  position: relative;
+  cursor: grab;
+  pointer-events: auto;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 只有貓、魚、土撥鼠會微微上下飄浮（樹懶不加此效果，樹枝才會穩固） */
+#presentation-pet.pet-floating {
+  animation: floatPet 3s ease-in-out infinite;
+}
+
+#presentation-pet:active {
+  cursor: grabbing;
+}
+
+/* 貓、魚、土撥鼠開心搖擺動畫 */
+#presentation-pet.pet-happy {
+  animation: happyWiggle 0.45s ease-in-out;
+}
+
+/* 樹懶專屬：以頂端樹枝為軸心微微左右晃動 */
+#presentation-pet.pet-sway {
+  transform-origin: top center;
+  animation: slothSway 0.8s ease-in-out;
+}
+
+#presentation-pet img {
+  width: 125px;
+  height: 125px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.18));
+  pointer-events: none;
+}
+
+.pet-emoji {
+  font-size: 75px;
+}
+
+/* 互動時的迷你氣泡 */
+#pet-reaction-toast {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid #ff8fa3;
+  color: #d6336c;
+  font-family: '微軟正黑體', sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+  box-shadow: 0 3px 8px rgba(255, 117, 143, 0.25);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  white-space: nowrap;
+}
+
+#pet-reaction-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 飄浮愛心與泡泡粒子 */
+.pet-particle {
+  position: fixed;
+  font-size: 20px;
+  pointer-events: none;
+  z-index: 1000000;
+  animation: floatParticle 1.2s ease-out forwards;
+}
+
+/* 一般零食掉落 */
+.pet-snack-particle {
+  position: fixed;
+  font-size: 26px;
+  pointer-events: none;
+  z-index: 1000000;
+  animation: snackDrop 0.8s ease-in forwards;
+}
+
+/* 魚缸專用：魚飼料緩緩沉入水中 */
+.pet-fish-food {
+  position: fixed;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 1000000;
+  animation: foodSink 1.1s ease-in-out forwards;
+}
+
+/* 正式簡報提醒對話框 */
+#pet-speech-bubble {
+  background: white;
+  border: 2px solid #ffb6c1;
+  border-radius: 15px;
+  padding: 14px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  pointer-events: auto;
+  display: none;
+  max-width: 230px;
+  font-family: '微軟正黑體', sans-serif;
+  color: #333;
+}
+
+.pet-btn {
+  background: #ff8fa3;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.pet-btn:hover { background: #ff758f; }
+
+@keyframes floatPet {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes happyWiggle {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.12) rotate(-8deg); }
+  50% { transform: scale(1.15) rotate(8deg); }
+  75% { transform: scale(1.1) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes slothSway {
+  0% { transform: rotate(0deg); }
+  30% { transform: rotate(-4deg); }
+  65% { transform: rotate(3deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes floatParticle {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-55px) scale(1.25);
+  }
+}
+
+@keyframes snackDrop {
+  0% {
+    opacity: 1;
+    transform: translateY(-45px) scale(1.2);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(5px) scale(0.3);
+  }
+}
+
+@keyframes foodSink {
+  0% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+  75% {
+    opacity: 0.9;
+    transform: translateY(45px) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.3);
+  }
+}
